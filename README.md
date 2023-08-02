@@ -31,7 +31,7 @@ To be able to see the content in a browser:<br>
 
 
 
-Linux and Apache are done, and now we need to set MySQL <br>
+Linux(Comming with AWS instance type) and Apache are done, and now we need to set MySQL <br>
 `sudo apt install mysql-server` `Y`, and then `Enter` then `sudo mysql`<br><br>
 
 The content below is verification of mysql installation.<br>
@@ -79,4 +79,19 @@ Create an index file into the prejectlamp then copy this<br>
 
 <img width="759" alt="Screenshot 2023-08-01 at 00 57 56" src="https://github.com/EryEr/LAMP-LEMP_Stack_Implementations/assets/138815393/49307e65-3c04-4b23-be37-fa981fadead8"><br>
 
+**Enable PHP on the website**<br><br>
+To be able to change the index file and put index.php to the prior one, we need to run the commands below.<br>
+`sudo vim /etc/apache2/mods-enabled/dir.conf`<br>
+`<IfModule mod_dir.c>`<br>
+        `#Change this:`<br>
+        `#DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm`<br>
+        `#To this:`<br>
+        `DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm`<br>
+`</IfModule>`<br>
+`sudo systemctl reload apache2`<br><br>
+After setting these commands now, we can create our  php index file, and we can create simple content.<br>
 
+`vim /var/www/projectlamp/index.php`<br>
+`<?php`<br>
+`phpinfo();`<br>
+This phpinfo will provide a simple PHP information page on our website.<br>

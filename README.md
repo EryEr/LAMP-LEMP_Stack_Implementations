@@ -1,6 +1,6 @@
 # LAMP-LEMP_Stack_Implementations
-LAMP(Linux, Apache, MySQL,PHP)<br>
-LEMP (Linux, Nginx, MySQL, PHP)<br>
+**LAMP(Linux, Apache, MySQL,PHP)**<br>
+
 
 An AWS EC2(Elastic Compute Cloud) instance(there are enough examples on youtube to set an instance.)   <br>
 Save this instance's private key(LAMP.pem) in a local folder. Hit the below code in the terminal in this local folder.<br><br>
@@ -94,3 +94,107 @@ After setting these commands now, we can create our  php index file, and we can 
 `<?php`<br>
 `phpinfo();`<br>
 This phpinfo will provide a simple PHP information page on our website.<br>
+
+<br><br><br><br>
+**LEMP (Linux, Nginx, MySQL, PHP)**<br><br>
+
+The difference in between LAMP and LEMP is Nginx. To set that running below command. <br>
+
+`sudo apt update`<br>
+`sudo apt install nginx`<br>
+To verify it `sudo systemctl status nginx`<br><br><br>
+
+
+`sudo mkdir /var/www/projectLEMP`<br>
+`sudo chown -R $USER:$USER /var/www/projectLEMP`<br>
+`sudo nano /etc/nginx/sites-available/projectLEMP`<br>
+
+`#/etc/nginx/sites-available/projectLEMP`<br>
+```
+server {
+    listen 80;
+    server_name projectLEMP www.projectLEMP;
+    root /var/www/projectLEMP;
+
+    index index.html index.htm index.php;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+     }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+}
+
+sudo ln -s /etc/nginx/sites-available/projectLEMP /etc/nginx/sites-enabled/
+
+$ sudo nginx -t
+```
+Last command to check the syntax issue and print below response<br>
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok<br>
+nginx: configuration file /etc/nginx/nginx.conf test is successful<br>
+```
+sudo unlink /etc/nginx/sites-enabled/default
+sudo systemctl reload nginx
+sudo echo 'Hello LEMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectLEMP/index.html
+```
+<br><br><br><br>
+
+
+```
+sudo mysql
+CREATE DATABASE `example_database`;
+CREATE USER 'example_user'@'%' IDENTIFIED WITH mysql_native_password BY 'PassWord.1';
+GRANT ALL ON example_database.* TO 'example_user'@'%';
+exit
+
+
+mysql -u example_user -p
+SHOW DATABASES;
+CREATE TABLE example_database.todo_list (item_id INT AUTO_INCREMENT,content VARCHAR(255),PRIMARY KEY(item_id));
+INSERT INTO example_database.todo_list (content) VALUES ("My first important item");
+SELECT * FROM example_database.todo_list;
+ exit
+
+
+
+nano /var/www/projectLEMP/todo_list.php
+<?php
+$user = "example_user";
+$password = "PassWord.1";
+$database = "example_database";
+$table = "todo_list";
+
+try {
+  $db = new PDO("mysql:host=localhost;dbname=$database", $user, $password);
+  echo "<h2>TODO</h2><ol>";
+  foreach($db->query("SELECT content FROM $table") as $row) {
+    echo "<li>" . $row['content'] . "</li>";
+  }
+  echo "</ol>";
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br/>";
+    die();
+}
+```
+<br>
+
+`dpkg -l | grep php`<br>
+
+`sudo systemctl start php8.1-fpm`<br>
+`sudo systemctl enablephp8.1-fpm`<br>
+
+`http://<Public_domain_or_IP>/todo_list.php`
+
+
+
+
+
+

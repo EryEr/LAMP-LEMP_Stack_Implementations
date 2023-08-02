@@ -191,9 +191,11 @@ try {
 `sudo systemctl start php8.1-fpm`<br>
 `sudo systemctl enablephp8.1-fpm`<br>
 
-To do: different tables could create on different pages
 
-`http://<Public_domain_or_IP>/todo_list.php`
+
+`http://<Public_domain_or_IP>/todo_list.php`<br>
+
+To do: different tables could create on different pages
 
 
 

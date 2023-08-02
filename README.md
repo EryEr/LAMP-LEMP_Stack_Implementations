@@ -76,8 +76,7 @@ Create an index file into the prejectlamp then copy this<br>
 
 `sudo echo 'Hello LAMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectlamp/index.html`<br><br>
 
-
-<img width="759" alt="Screenshot 2023-08-01 at 00 57 56" src="https://github.com/EryEr/LAMP-LEMP_Stack_Implementations/assets/138815393/49307e65-3c04-4b23-be37-fa981fadead8"><br>
+<img width="899" alt="Screenshot 2023-07-20 at 19 34 34" src="https://github.com/EryEr/LAMP-LEMP_Stack_Implementations/assets/138815393/7a4cda8f-93e5-4dc3-ab96-5fa492dbf5dc"><br>
 
 **Enable PHP on the website**<br><br>
 To be able to change the index file and put index.php to the prior one, we need to run the commands below.<br>
